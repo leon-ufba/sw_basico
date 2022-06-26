@@ -349,13 +349,12 @@ _printInt:
 ; imprime uma string terminada por '\0'
 _print:
         regPusha                        ; salva os registradores
+        mov       rsi, rax              ; define o endereço de memória da string para imprimir
 
-        mov       rdi, rax
-        mov       rsi, rax
-
-        mov       rax, 0
+        mov       rdi, rax              ; move o endereço da string em que ocorrerá a busca
+        mov       rax, 0                ; valor para procurar
         mov       rcx, MAX_STRING       ; define o tamanho máximo de impressão da string
-        cld
+        cld                             ; procura no sentido crescente
         repne     scasb                 ; procura '\0' (AL == 0), usando [ES:EDI]
         
         ; calcula a quantidade de bytes a serem impressos
