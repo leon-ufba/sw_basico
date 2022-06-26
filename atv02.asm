@@ -1,4 +1,5 @@
 ; ----------------------------------------------------------------------------------------
+; Estudante: Leon Lima Santos
 ; Programa que mostra os passos para solução das Torres de Hanoi. Feito para Linux x64.
 ; Para compilar e executar:
 ;     nasm -felf64 atv02.asm && ld -s -o atv02.exe atv02.o && ./atv02.exe
