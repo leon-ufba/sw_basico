@@ -1,4 +1,5 @@
 ; ----------------------------------------------------------------------------------------
+; Estudante: Leon Lima Santos
 ; Programa fazer operações com uma string definida. Feito para Linux x64.
 ; Para compilar e executar:
 ;     nasm -felf64 atv01.asm && ld -s -o atv01.exe atv01.o && ./atv01.exe
