@@ -105,6 +105,41 @@ _start:
         regPopa                         ; resgata os registradores
         call      _exit                 ; finaliza o programa
 
+; imprime um inteiro n; para (0 <= n <= 9)
+_printInt:
+        regPusha                        ; salva os registradores
+        mov       rsi, msgInt           ; resgata a memória de msgInt
+        mov       rdx, 1                ; quantidade de 1 byte
+        mov       rax, 1                ; seleciona 1 para escrever
+        mov       rdi, 1                ; seleciona 1 para o stdout
+        syscall                         ; chamada dos sistema para imprimir na tela
+        regPopa                         ; resgata os registradores
+        ret                             ; retorna da chamada
+
+; imprime uma string terminada por '\0'
+_print:
+        regPusha                        ; salva os registradores
+        mov       rsi, rax              ; define o endereço de memória da string para imprimir
+
+        mov       rdi, rax              ; move o endereço da string em que ocorrerá a busca
+        mov       rax, 0                ; valor para procurar
+        mov       rcx, MAX_STRING       ; define o tamanho máximo de impressão da string
+        cld                             ; procura no sentido crescente
+        repne     scasb                 ; procura '\0' (AL == 0), usando [ES:EDI]
+        
+        ; calcula a quantidade de bytes a serem impressos
+        add       rcx, 1
+        sub       rcx, MAX_STRING
+        neg       rcx
+        mov       rdx, rcx
+
+        mov       rax, 1                ; seleciona 1 para escrever
+        mov       rdi, 1                ; seleciona 1 para o stdout
+        syscall                         ; chamada dos sistema para imprimir na tela
+
+        regPopa                         ; resgata os registradores
+        ret                             ; retorna da chamada
+
 ; calcula os passos para solução das Torres de Hanoi
 _hanoi:
         regPusha                        ; salva os registradores
@@ -331,41 +366,6 @@ _printTowers:
         mov       rax, msgSpace
         call      _print
         call      _print
-
-        regPopa                         ; resgata os registradores
-        ret                             ; retorna da chamada
-
-; imprime um inteiro n; para (0 <= n <= 9)
-_printInt:
-        regPusha                        ; salva os registradores
-        mov       rsi, msgInt           ; resgata a memória de msgInt
-        mov       rdx, 1                ; quantidade de 1 byte
-        mov       rax, 1                ; seleciona 1 para escrever
-        mov       rdi, 1                ; seleciona 1 para o stdout
-        syscall                         ; chamada dos sistema para imprimir na tela
-        regPopa                         ; resgata os registradores
-        ret                             ; retorna da chamada
-
-; imprime uma string terminada por '\0'
-_print:
-        regPusha                        ; salva os registradores
-        mov       rsi, rax              ; define o endereço de memória da string para imprimir
-
-        mov       rdi, rax              ; move o endereço da string em que ocorrerá a busca
-        mov       rax, 0                ; valor para procurar
-        mov       rcx, MAX_STRING       ; define o tamanho máximo de impressão da string
-        cld                             ; procura no sentido crescente
-        repne     scasb                 ; procura '\0' (AL == 0), usando [ES:EDI]
-        
-        ; calcula a quantidade de bytes a serem impressos
-        add       rcx, 1
-        sub       rcx, MAX_STRING
-        neg       rcx
-        mov       rdx, rcx
-
-        mov       rax, 1                ; seleciona 1 para escrever
-        mov       rdi, 1                ; seleciona 1 para o stdout
-        syscall                         ; chamada dos sistema para imprimir na tela
 
         regPopa                         ; resgata os registradores
         ret                             ; retorna da chamada
